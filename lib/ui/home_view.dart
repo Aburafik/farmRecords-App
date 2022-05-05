@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -22,7 +23,12 @@ class HomeView extends StatelessWidget {
                         color: Colors.green,
                         fontWeight: FontWeight.bold)),
               ])),
-          actions: [CircleAvatar()]),
+          actions: [
+            CircleAvatar(
+              backgroundImage: NetworkImage(
+                  "https://images.unsplash.com/photo-1651607243919-ca7e3176e9bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60"),
+            )
+          ]),
       drawer: Drawer(),
       floatingActionButton: FloatingActionButton(
           child: Icon(
@@ -68,7 +74,47 @@ class _BodyWigetState extends State<BodyWiget> {
                   ])),
               Spacer(),
               TextButton(
-                  onPressed: () {},
+                  style: TextButton.styleFrom(backgroundColor: yellowColor),
+                  onPressed: () {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) => Dialog(
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                              child: Container(
+             
+                                // padding: EdgeInsets.all(16),
+                                height: 350,
+                                width: MediaQuery.of(context).size.width * .9,
+                                child: Column(
+                                  children: [
+                                    Card(
+                                      child: QrImage(
+                                        data: "1234567890",
+                                        version: QrVersions.auto,
+                                        size: 200.0,
+                                      ),
+                                    ),
+                                    Text(
+                                      "Scan QR code to download record book",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: Text(
+                                          "Close",
+                                          style: TextStyle(color: Colors.red),
+                                        ))
+                                  ],
+                                ),
+                              ),
+                            ));
+                  },
                   child: Row(
                     children: [
                       Text(
